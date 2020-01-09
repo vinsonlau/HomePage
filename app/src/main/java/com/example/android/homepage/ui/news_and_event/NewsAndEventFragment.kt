@@ -1,31 +1,83 @@
 package com.example.android.homepage.ui.news_and_event
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
+import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
+import androidx.viewpager.widget.ViewPager
+import com.example.android.homepage.AddNewsFragment
 import com.example.android.homepage.R
+import com.example.android.homepage.TestAddNews
+import com.google.android.material.tabs.TabLayout
 
 class NewsAndEventFragment : Fragment() {
 
-    private lateinit var newsAndEventViewModel: NewsAndEventViewModel
+    private lateinit var viewPager: ViewPager
+    private lateinit var tabLayout: TabLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        newsAndEventViewModel =
-            ViewModelProviders.of(this).get(NewsAndEventViewModel::class.java)
+
         val root = inflater.inflate(R.layout.fragment_news_and_event, container, false)
-        val textView: TextView = root.findViewById(R.id.text_news_and_event)
-        newsAndEventViewModel.text.observe(this, Observer {
-            textView.text = it
-        })
+        viewPager = root.findViewById(R.id.viewPager)
+        tabLayout = root.findViewById(R.id.tabs)
+
         return root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        setUpViewPager(viewPager)
+        tabLayout.setupWithViewPager(viewPager)
+        tabLayout.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(viewPager))
+        setHasOptionsMenu(true)
+    }
+
+    private fun setUpViewPager(viewPager: ViewPager) {
+        val pagerAdapter =
+            NEPagerAdapter(
+                childFragmentManager
+            )
+        pagerAdapter.addFragment(FragmentNews(), "News")
+        pagerAdapter.addFragment(FragmentEvent(), "Event")
+
+        viewPager.adapter = pagerAdapter
+    }
+
+    //enable options menu in this fragment
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    //inflate the menu
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater!!.inflate(R.menu.news_and_event_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    //handle item clicks of menu
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        //get item id to handle item clicks
+        val id = item!!.itemId
+        //handle item clicks
+        if (id == R.id.add_news) {
+           // view!!.findNavController().navigate(R.id.addNewsFragment)
+            val myIntent = Intent(activity, TestAddNews::class.java)
+            activity!!.startActivity(myIntent)
+
+        }
+
+        if (id == R.id.add_event) {
+                //do your action here, im just showing toast
+
+        }
+
+            return super.onOptionsItemSelected(item)
     }
 }

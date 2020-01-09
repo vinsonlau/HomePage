@@ -11,3 +11,4 @@ class InformationCentreViewModel : ViewModel() {
     }
     val text: LiveData<String> = _text
 }
+
