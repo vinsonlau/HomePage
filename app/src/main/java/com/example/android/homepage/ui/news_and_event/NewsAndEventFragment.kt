@@ -1,14 +1,11 @@
 package com.example.android.homepage.ui.news_and_event
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.viewpager.widget.ViewPager
-import com.example.android.homepage.AddNewsFragment
 import com.example.android.homepage.R
-import com.example.android.homepage.TestAddNews
 import com.google.android.material.tabs.TabLayout
 
 class NewsAndEventFragment : Fragment() {
@@ -67,9 +64,9 @@ class NewsAndEventFragment : Fragment() {
         val id = item!!.itemId
         //handle item clicks
         if (id == R.id.add_news) {
-           // view!!.findNavController().navigate(R.id.addNewsFragment)
-            val myIntent = Intent(activity, TestAddNews::class.java)
-            activity!!.startActivity(myIntent)
+            view!!.findNavController().navigate(R.id.addNewsFragment)
+           /* val myIntent = Intent(activity, TestAddNews::class.java)
+            activity!!.startActivity(myIntent)*/
 
         }
 

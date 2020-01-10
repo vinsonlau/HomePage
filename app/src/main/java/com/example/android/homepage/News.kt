@@ -7,13 +7,15 @@ import java.util.*
 class News{
     var title:String? = null
     var link:String? = null
+    var date:Long = System.currentTimeMillis()
     constructor(){
-
+        //Default constructor
     }
 
-    constructor(title:String?, link:String?){
+    constructor(title:String?, link:String?, date:Long){
         this.title=title
         this.link=link
+        this.date=date
     }
 
     @Exclude
@@ -21,6 +23,7 @@ class News{
         val result = HashMap<String, Any>()
         result.put("title",title!!)
         result.put("link",link!!)
+        result.put("date",date)
 
         return result
     }

@@ -64,10 +64,4 @@
             android:id="@+id/action_addNewsFragment_to_navigation_news_and_event3"
             app:destination="@+id/navigation_news_and_event" />
     </fragment>
-
-    <activity
-        android:id="@+id/testAddNews"
-        android:name="com.example.android.homepage.TestAddNews"
-        android:label="fragment_add_news"
-        tools:layout="@layout/fragment_add_news" />
 </navigation>
