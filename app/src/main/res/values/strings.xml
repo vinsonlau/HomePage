@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HomePage</string>
+    <string name="app_name">Green Urth</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -22,5 +22,10 @@
     <string name="submit">Submit</string>
     <string name="required">Required</string>
     <string name="title">Title</string>
-    <string name="date">Date</string>
+    <string name="date">Date of Event: </string>
+    <string name="channel_name">Notification Channel</string>
+    <string name="event_image">Event</string>
+    <string name="add_description">Enter your description here</string>
+    <string name="date_format">31.12.19</string>
+    <string name="description">Descrption:</string>
 </resources>

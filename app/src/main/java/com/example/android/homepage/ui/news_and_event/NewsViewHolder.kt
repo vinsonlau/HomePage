@@ -1,19 +1,16 @@
-package com.example.android.homepage
+package com.example.android.homepage.ui.news_and_event
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_add_news.view.*
+import com.example.android.homepage.ui.news_and_event.News
 import kotlinx.android.synthetic.main.news_layout.view.*
 import java.text.SimpleDateFormat
 
 class NewsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener{
 
-    fun bindNews(news:News?){
+    fun bindNews(news: News?){
         with(news!!){
             itemView.textViewLink.text = link
             itemView.textViewTitle.text = title

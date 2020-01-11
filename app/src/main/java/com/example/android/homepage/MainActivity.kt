@@ -1,5 +1,6 @@
 package com.example.android.homepage
 
+import android.net.Uri
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -11,9 +12,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.android.homepage.ui.news_and_event.FragmentEvent
+import com.example.android.homepage.ui.news_and_event.NewsAndEventFragment
 import kotlinx.android.synthetic.main.fragment_news_and_event.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FragmentEvent.OnFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,4 +35,23 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+    override fun onFragmentInteraction(uri: Uri) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = this.findNavController(R.id.nav_host_fragment)
+
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_home,
+                R.id.navigation_profile,
+                R.id.navigation_location,
+                R.id.navigation_information_centre,
+                R.id.navigation_news_and_event,
+                R.id.addNewsFragment
+            )
+        )
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
+    }
+
 }

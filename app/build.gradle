@@ -4,13 +4,14 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'androidx.navigation.safeargs'
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.android.homepage"
-        minSdkVersion 19
+        minSdkVersion 26
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -45,9 +46,19 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation 'com.google.android.material:material:1.0.0'
 
+    //for firebase
     implementation 'com.google.firebase:firebase-database:16.0.4'
     implementation 'com.google.firebase:firebase-storage:16.0.4'
     implementation 'com.google.firebase:firebase-auth:16.0.5'
+
+    //for notification
+    implementation "com.android.support:support-compat:28.0.0"
+
+    //to display image in event_layout.xml
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation "com.android.support:support-core-utils:28.0.0"
+
+
 }
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'

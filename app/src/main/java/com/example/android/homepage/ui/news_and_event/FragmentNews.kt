@@ -9,13 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.android.homepage.News
-import com.example.android.homepage.NewsViewHolder
 import com.example.android.homepage.R
 import com.firebase.ui.database.ChangeEventListener
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_fragment_event.*
 import kotlinx.android.synthetic.main.fragment_fragment_news.*
 
 /**

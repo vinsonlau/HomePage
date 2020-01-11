@@ -67,14 +67,11 @@ class NewsAndEventFragment : Fragment() {
             view!!.findNavController().navigate(R.id.addNewsFragment)
            /* val myIntent = Intent(activity, TestAddNews::class.java)
             activity!!.startActivity(myIntent)*/
-
         }
 
         if (id == R.id.add_event) {
-                //do your action here, im just showing toast
-
+            view!!.findNavController().navigate(R.id.addEventFragment)
         }
-
             return super.onOptionsItemSelected(item)
     }
 }

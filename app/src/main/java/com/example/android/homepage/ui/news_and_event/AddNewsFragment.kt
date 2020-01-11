@@ -1,29 +1,28 @@
-package com.example.android.homepage
+package com.example.android.homepage.ui.news_and_event
 
 
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.ContentValues.TAG
-import android.location.Location
-import android.net.Uri
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.firebase.ui.database.ChangeEventListener
+import com.example.android.homepage.MainActivity
+import com.example.android.homepage.R
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_add_news.*
-import kotlinx.android.synthetic.main.fragment_fragment_news.*
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.HashMap
 
 /**
@@ -57,6 +56,8 @@ class AddNewsFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_add_news, container, false)
         val btnSubmit: Button = view.findViewById(R.id.buttonSubmit)
+        notificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
         btnSubmit.setOnClickListener {
             //validation on input
             if(TextUtils.isEmpty(editTextTitle.text.toString())){
@@ -70,10 +71,39 @@ class AddNewsFragment : Fragment() {
                 Toast.makeText(context, "Link is required", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
             addNews()
 
+            val intent = Intent(context,
+                MainActivity::class.java)
+            val pendingIntent = PendingIntent.getActivity(context,1,intent,PendingIntent.FLAG_UPDATE_CURRENT)
 
+            if(Build.VERSION.SDK_INT >= 0/*Build.VERSION_CODES.0*/){
+            notificationChannel = NotificationChannel(channelId,"Green Urth",NotificationManager.IMPORTANCE_HIGH)
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.BLUE
+            notificationChannel.enableVibration(true)
+            notificationManager.createNotificationChannel(notificationChannel)
+
+            builder = Notification.Builder(context,channelId)
+                //.setContentTitle("Green Urth")
+                .setContentText("Latest news have been updated. Check it out!")
+                .setSmallIcon(R.drawable.ic_gu_logo)
+                .setLargeIcon(BitmapFactory.decodeResource(this.resources,
+                    R.drawable.ic_gu_logo
+                ))
+                .setContentIntent(pendingIntent)
+            }else{
+                builder = Notification.Builder(context,channelId)
+                   // .setContentTitle("Green Urth")
+                    .setContentText("Latest news have been updated. Check it out!")
+                    .setSmallIcon(R.drawable.ic_gu_logo)
+                    .setLargeIcon(BitmapFactory.decodeResource(this.resources,
+                        R.drawable.ic_gu_logo
+                    ))
+                    .setContentIntent(pendingIntent)
+            }
+            //unique id
+            notificationManager.notify(1,builder.build())
         }
 
         return view
@@ -85,9 +115,11 @@ class AddNewsFragment : Fragment() {
         val link= editTextLink.text.toString()
         val date = System.currentTimeMillis()
 
-
-
-        val news = News(title,link,date)
+        val news = News(
+            title,
+            link,
+            date
+        )
 
         val newsValues = news.toMap()
         val childUpdates = HashMap<String,Any>()
@@ -97,6 +129,22 @@ class AddNewsFragment : Fragment() {
         Toast.makeText(context, "News updated", Toast.LENGTH_SHORT).show()
         editTextTitle.setText("")
         editTextLink.setText("")
-
     }
+
+    /*private fun createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.channel_name)
+            val descriptionText = getString(R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }*/
 }

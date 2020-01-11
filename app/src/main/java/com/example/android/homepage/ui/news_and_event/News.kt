@@ -1,4 +1,4 @@
-package com.example.android.homepage
+package com.example.android.homepage.ui.news_and_event
 
 import com.google.firebase.database.Exclude
 import kotlinx.android.synthetic.main.fragment_add_news.*
