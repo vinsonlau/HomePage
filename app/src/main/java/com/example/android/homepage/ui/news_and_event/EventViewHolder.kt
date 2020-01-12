@@ -11,10 +11,10 @@ class EventViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.O
 
     fun bindEvent(event: Event?){
         with(event!!){
-            Picasso.get().load(eventImage).into(itemView.imageViewEvent)
-            itemView.textViewDescription.text = description
-            itemView.textViewTitle.text = title
-            itemView.textViewDate.text = date
+            //Picasso.get().load(eventImage).into(itemView.imageViewEvent)
+            itemView.textViewDescriptionContent.text = description
+            itemView.textViewTitleContent.text = title
+            itemView.textViewDateContent.text = date
         }
     }
 
@@ -30,7 +30,7 @@ class EventViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.O
         val date = v?.textViewDate?.text.toString()
         val description = v?.textViewDescription?.text.toString()
 
-        v?.findNavController()?.navigate(FragmentEventDirections.actionFragmentEventToEventDetails())
+        //v?.findNavController()?.navigate(FragmentEventDirections.actionFragmentEventToEventDetails())
     }
 
 

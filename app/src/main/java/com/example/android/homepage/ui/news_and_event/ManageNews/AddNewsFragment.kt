@@ -1,4 +1,4 @@
-package com.example.android.homepage.ui.news_and_event
+package com.example.android.homepage.ui.news_and_event.ManageNews
 
 
 import android.app.Notification
@@ -18,8 +18,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.navigation.findNavController
 import com.example.android.homepage.MainActivity
 import com.example.android.homepage.R
+import com.example.android.homepage.ui.news_and_event.News
+import com.example.android.homepage.ui.news_and_event.NewsViewHolder
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_add_news.*
@@ -129,6 +132,7 @@ class AddNewsFragment : Fragment() {
         Toast.makeText(context, "News updated", Toast.LENGTH_SHORT).show()
         editTextTitle.setText("")
         editTextLink.setText("")
+        view?.findNavController()?.navigate(R.id.fragmentNews)
     }
 
     /*private fun createNotificationChannel() {

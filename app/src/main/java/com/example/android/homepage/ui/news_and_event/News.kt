@@ -5,6 +5,7 @@ import kotlinx.android.synthetic.main.fragment_add_news.*
 import java.util.*
 
 class News{
+    var dataKey: String? = null
     var title:String? = null
     var link:String? = null
     var date:Long = System.currentTimeMillis()
@@ -24,7 +25,6 @@ class News{
         result.put("title",title!!)
         result.put("link",link!!)
         result.put("date",date)
-
         return result
     }
 }

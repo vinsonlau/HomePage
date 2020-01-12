@@ -52,26 +52,5 @@ class NewsAndEventFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-    //inflate the menu
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.news_and_event_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
 
-    //handle item clicks of menu
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        //get item id to handle item clicks
-        val id = item!!.itemId
-        //handle item clicks
-        if (id == R.id.add_news) {
-            view!!.findNavController().navigate(R.id.addNewsFragment)
-           /* val myIntent = Intent(activity, TestAddNews::class.java)
-            activity!!.startActivity(myIntent)*/
-        }
-
-        if (id == R.id.add_event) {
-            view!!.findNavController().navigate(R.id.addEventFragment)
-        }
-            return super.onOptionsItemSelected(item)
-    }
 }

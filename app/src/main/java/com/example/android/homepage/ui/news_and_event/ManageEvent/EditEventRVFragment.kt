@@ -1,4 +1,4 @@
-package com.example.android.homepage.ui.news_and_event
+package com.example.android.homepage.ui.news_and_event.ManageEvent
 
 
 import android.content.ContentValues.TAG
@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.homepage.R
+import com.example.android.homepage.ui.news_and_event.Event
 import com.firebase.ui.database.ChangeEventListener
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.firebase.database.*
@@ -18,20 +19,19 @@ import kotlinx.android.synthetic.main.fragment_fragment_event.*
 /**
  * A simple [Fragment] subclass.
  */
-class FragmentEvent : Fragment() {
+class EditEventRVFragment : Fragment() {
 
     private var eventDatabase: DatabaseReference? = null//change
     //to get the current database pointer
     private var eventReference: DatabaseReference? = null//change
     private var eventListener: ChildEventListener? = null//change
-    private var eventAdapter: FirebaseRecyclerAdapter<Event, EventViewHolder>? = null
-
+    private var eventAdapter: FirebaseRecyclerAdapter<Event, EditEventViewHolder>? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment_event, container, false)
+        return inflater.inflate(R.layout.fragment_edit_event_rv, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -75,6 +75,10 @@ class FragmentEvent : Fragment() {
         }
     }
 
+    interface OnFragmentInteractionListener{
+        fun onFragmentInteraction(uri: Uri)
+    }
+
     private fun initView(){
         //to get the root folder
         eventDatabase = FirebaseDatabase.getInstance().reference
@@ -82,12 +86,14 @@ class FragmentEvent : Fragment() {
 
         firebaseListenerInit()
         eventRecyclerView.layoutManager = LinearLayoutManager(context)
-        val query = eventReference!!.limitToLast(15)
-        eventAdapter = object: FirebaseRecyclerAdapter<Event, EventViewHolder>(
-            Event::class.java, R.layout.event_layout, EventViewHolder::class.java,query
+        val query = eventReference!!.limitToLast(30)
+        eventAdapter = object: FirebaseRecyclerAdapter<Event, EditEventViewHolder>(
+            Event::class.java, R.layout.event_layout, EditEventViewHolder::class.java,query
         ){
-            override fun populateViewHolder(viewHolder: EventViewHolder?, model: Event?, position: Int) {
-                viewHolder!!.bindEvent(model)
+            override fun populateViewHolder(viewHolder: EditEventViewHolder?, model: Event?, position: Int) {
+                eventReference = getRef(position)
+                model?.dataKey = eventReference?.key.toString()
+                viewHolder!!.bindEventEdit(model)
             }
 
             override fun onChildChanged(
@@ -97,14 +103,9 @@ class FragmentEvent : Fragment() {
                 oldIndex: Int
             ) {
                 super.onChildChanged(type, snapshot, index, oldIndex)
-                //newsRecyclerView.scrollToPosition(index)
             }
         }
         eventRecyclerView.adapter = eventAdapter
-    }
-
-    interface OnFragmentInteractionListener{
-        fun onFragmentInteraction(uri: Uri)
     }
 
     override fun onStop() {
@@ -119,32 +120,5 @@ class FragmentEvent : Fragment() {
         super.onDestroy()
 
         eventAdapter!!.cleanup()
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
-    //inflate the menu
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.event_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    //handle item clicks of menu
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        //get item id to handle item clicks
-        val id = item!!.itemId
-        //handle item clicks
-        if (id == R.id.add_event) {
-            view!!.findNavController().navigate(R.id.addEventFragment)
-            /* val myIntent = Intent(activity, TestAddNews::class.java)
-             activity!!.startActivity(myIntent)*/
-        }
-        else if (id == R.id.edit_event) {
-            view!!.findNavController().navigate(R.id.editEventRVFragment)
-        }
-        return super.onOptionsItemSelected(item)
     }
 }

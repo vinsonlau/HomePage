@@ -15,6 +15,7 @@ class NewsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.On
             itemView.textViewLink.text = link
             itemView.textViewTitle.text = title
             itemView.textViewDate.text = SimpleDateFormat("dd.MM.yy").format(date)
+            itemView.textViewDataKey.text = dataKey
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.android.homepage.ui.news_and_event
+package com.example.android.homepage.ui.news_and_event.ManageEvent
 
 
 import android.app.*
@@ -15,12 +15,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.Toast
-import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.example.android.homepage.MainActivity
 import com.example.android.homepage.R
+import com.example.android.homepage.ui.news_and_event.Event
+import com.example.android.homepage.ui.news_and_event.EventViewHolder
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DatabaseReference
@@ -84,10 +85,10 @@ class AddEventFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_add_event, container, false)
         val btnSubmit: Button = view.findViewById(R.id.buttonSubmit)
-        val imgUpload:ImageButton = view.findViewById(R.id.imageButtonEvent)
+        //val imgUpload:ImageButton = view.findViewById(R.id.imageButtonEvent)
         notificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        imgUpload.setOnClickListener {
+        /*imgUpload.setOnClickListener {
            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                //what is require context
                if(checkSelfPermission(requireContext(),android.Manifest.permission.READ_EXTERNAL_STORAGE) ==
@@ -98,7 +99,7 @@ class AddEventFragment : Fragment() {
                    pickImageFromGallery()
                }
            }
-        }
+        }*/
 
         btnSubmit.setOnClickListener {
             //validation on input
@@ -181,7 +182,7 @@ class AddEventFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode== Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
-            imageButtonEvent.setImageURI(data?.data)
+            //imageButtonEvent.setImageURI(data?.data)
             //Picasso.get().load(data?.data).into(imageButtonEvent)
             //filePath = data?.getData()
 
@@ -222,6 +223,7 @@ class AddEventFragment : Fragment() {
         editTextTitle.setText("")
         editTextDate.setText("")
         editTextDescription.setText("")
+        view?.findNavController()?.navigate(R.id.fragmentEvent)
     }
 
     /*private fun createNotificationChannel() {
